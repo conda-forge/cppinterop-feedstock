@@ -1,3 +1,5 @@
+@echo on
+
 rem # Common settings
 
 set
