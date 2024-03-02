@@ -1,13 +1,6 @@
-@echo on
+rem @echo on
 
 rem # Common settings
-
-echo "-------------"
-dir /S %PREFIX%\Library\bin
-echo "-------------"
-dir /S %PREFIX%
-echo "-------------"
-dir /S %BUILD_PREFIX%
 
 set CPU_COUNT=%NUMBER_OF_PROCESSORS%
 set PATH="%BUILD_PREFIX%\Library\bin;%PATH%;%BUILD_PREFIX%/x86_64-conda-linux-gnu/lib;%BUILD_PREFIX/lib;%PREFIX/lib"
@@ -19,6 +12,8 @@ pushd cppinterop
 mkdir build
 cd build
 
+echo "--- 1 ---"
+
 cmake ^
   -G "Ninja" ^
   %CMAKE_ARGS%                              ^
@@ -28,10 +23,16 @@ cmake ^
   -DCPPINTEROP_ENABLE_TESTING=ON            ^
   ..
 
+echo "--- 2 ---"
+
 ninja -j%CPU_COUNT% check-cppinterop
 rem if errorlevel 1 exit 1
 
+echo "--- 3 ---"
+
 ninja install
 if errorlevel 1 exit 1
+
+echo "--- 4 ---"
 
 popd
