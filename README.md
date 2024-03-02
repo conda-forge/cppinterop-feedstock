@@ -11,9 +11,9 @@ Summary: The CppInterOp library provides a minimalist approach for other languag
 to interoperate with C++ entities.
 
 
-Development: https://cppinterop.readthedocs.io/en/1.1.0/DevelopersDocumentation.html
+Development: https://cppinterop.readthedocs.io/en/1.2.0/DevelopersDocumentation.html
 
-Documentation: https://cppinterop.readthedocs.io/en/1.1.0
+Documentation: https://cppinterop.readthedocs.io/en/1.2.0
 
 CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
 The API support downstream tools that utilize interactive C++ by using
@@ -53,6 +53,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21254&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21254&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
                 </a>
               </td>
             </tr>
