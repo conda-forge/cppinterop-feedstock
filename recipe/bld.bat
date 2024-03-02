@@ -1,5 +1,8 @@
 rem # Common settings
 
+set
+dir
+
 set CPU_COUNT=%NUMBER_OF_PROCESSORS%
 set PATH="%PREFIX%\Library\bin;%PATH%;%BUILD_PREFIX%/x86_64-conda-linux-gnu/lib;%BUILD_PREFIX/lib;%PREFIX/lib"
 set INCLUDE="%INCLUDE%;%cd%/include;%BUILD_PREFIX/x86_64-conda-linux-gnu/include/c++/12.3.0;%BUILD_PREFIX%/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu;%BUILD_PREFIX%/x86_64-conda-linux-gnu/sysroot/usr/include;%BUILD_PREFIX%/include;%PREFIX%/include"
