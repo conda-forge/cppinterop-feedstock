@@ -13,7 +13,6 @@ source:
     folder: cppinterop
 
 build:
-  skip: true  # [win]
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
 
@@ -24,7 +23,6 @@ requirements:
     - make  # [unix]
     - ninja  # [win]
     - {{ compiler('cxx') }}
-    - wget
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
