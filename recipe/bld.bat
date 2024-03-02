@@ -2,8 +2,12 @@
 
 rem # Common settings
 
-set
-dir
+echo "-------------"
+dir /S %PREFIX%\Library\bin
+echo "-------------"
+dir /S %PREFIX%
+echo "-------------"
+dir /S %BUILD_PREFIX%
 
 set CPU_COUNT=%NUMBER_OF_PROCESSORS%
 set PATH="%PREFIX%\Library\bin;%PATH%;%BUILD_PREFIX%/x86_64-conda-linux-gnu/lib;%BUILD_PREFIX/lib;%PREFIX/lib"
