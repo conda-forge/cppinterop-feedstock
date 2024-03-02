@@ -1,6 +1,6 @@
 {% set name = "CppInterOp" %}
-{% set build_number = 1 %}
-{% set version = "1.1.0" %}
+{% set build_number = 0 %}
+{% set version = "1.2.0" %}
 {% set revision_tag = "v"+version %}
 
 package:
@@ -9,12 +9,8 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-    sha256: 29377ba4fecd82395efd2fefcaa911fe72396d78293607852bd0e9b9ab65d1dc
+    sha256: b3cf25f500624fe12ffc40f858a04c46daea808298e64d924b594eb35ca1c806
     folder: cppinterop
-    patches:
-      - patches/cppinterop/cppinterop-1.1.0-0001-cppinterop-Add-missing-dependencies.patch
-  - path: patches
-    folder: add_patches
 
 build:
   skip: true  # [win]
