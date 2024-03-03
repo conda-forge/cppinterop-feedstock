@@ -36,7 +36,7 @@ requirements:
     - backtrace  # [unix and x86]
     - libxml2
     - zlib
-    - zstd
+    - zstd  # [not win]
     - libcxx {{ cxx_compiler_version }}  # [osx]
     - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   run_constrained:
