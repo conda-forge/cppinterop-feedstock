@@ -8,13 +8,15 @@ set INCLUDE="%INCLUDE%;%cd%\include;%BUILD_PREFIX%\x86_64-conda-linux-gnu\includ
 
 rem ### Build CppInterOp next to llvm-project.
 
+conda activate %BUILD_PREFIX%
+
 pushd cppinterop
 mkdir build
 cd build
 
 path
 
-%BUILD_PREFIX%\Library\bin\cmake.exe ^
+cmake ^
   -G "Ninja" ^
   %CMAKE_ARGS%                              ^
   -DUSE_CLING=OFF                           ^
