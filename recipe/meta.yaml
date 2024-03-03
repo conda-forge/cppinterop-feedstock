@@ -30,6 +30,8 @@ requirements:
     - libcxx {{ cxx_compiler_version }}  # [osx]
     - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   host:
+    - cmake
+    - ninja  # [win]
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
