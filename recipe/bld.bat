@@ -14,7 +14,7 @@ cd build
 
 path
 
-cmake ^
+%BUILD_PREFIX%\Library\bin\cmake.exe ^
   -G "Ninja" ^
   %CMAKE_ARGS%                              ^
   -DUSE_CLING=OFF                           ^
