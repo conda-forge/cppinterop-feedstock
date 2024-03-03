@@ -14,6 +14,11 @@ cd build
 
 echo "--- 1 ---"
 
+echo "%PATH%"
+
+dir %BUILD_PREFIX%\Library\bin
+dir %PREFIX%\Library\bin
+
 cmake ^
   -G "Ninja" ^
   %CMAKE_ARGS%                              ^
