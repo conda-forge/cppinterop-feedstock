@@ -29,7 +29,6 @@ requirements:
     - git-lfs
     - libcxx {{ cxx_compiler_version }}  # [osx]
     - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
-    - zstd  # [win]
   host:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}

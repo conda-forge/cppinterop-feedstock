@@ -25,7 +25,7 @@ cmake ^
   -DUSE_REPL=ON                             ^
   -DBUILD_SHARED_LIBS=ON                    ^
   -DCPPINTEROP_ENABLE_TESTING=ON            ^
-  ..
+  --trace-expand ..
 
 if errorlevel 1 exit 1
 
