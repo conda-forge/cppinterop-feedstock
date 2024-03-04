@@ -54,6 +54,9 @@ requirements:
 test:
   commands:
     - test -f $PREFIX/lib/libclangCppInterOp${SHLIB_EXT}  # [unix]
+    - echo %LIBRARY_BIN%  # [win]
+    - dir /S %LIBRARY_BIN%  # [win]
+    - dir /S D:\  # [win]
     - if not exist %LIBRARY_BIN%\\libclangCppInterOp.dll exit 1  # [win]
 
 about:
