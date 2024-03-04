@@ -12,7 +12,7 @@ source:
     sha256: b3cf25f500624fe12ffc40f858a04c46daea808298e64d924b594eb35ca1c806
     folder: cppinterop
     patches:
-      - patches/cppinterop/0001-patch.patch
+      - patches/cppinterop/0001-cmake-Work-around-a-bug-in-the-llvm-config.patch
   - path: patches
     folder: add_patches
 
@@ -54,10 +54,7 @@ requirements:
 test:
   commands:
     - test -f $PREFIX/lib/libclangCppInterOp${SHLIB_EXT}  # [unix]
-    - echo %LIBRARY_BIN%  # [win]
-    - dir /S %LIBRARY_BIN%  # [win]
-    - dir /S D:\  # [win]
-    - if not exist %LIBRARY_BIN%\\libclangCppInterOp.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\clangCppInterOp.dll exit 1  # [win]
 
 about:
   home: https://github.com/compiler-research/CppInterOp
