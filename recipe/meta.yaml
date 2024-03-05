@@ -1,5 +1,5 @@
 {% set name = "CppInterOp" %}
-{% set build_number = 0 %}
+{% set build_number = 1 %}
 {% set version = "1.2.0" %}
 {% set revision_tag = "v"+version %}
 
@@ -13,6 +13,7 @@ source:
     folder: cppinterop
     patches:
       - patches/cppinterop/0001-cmake-Work-around-a-bug-in-the-llvm-config.patch
+      - patches/cppinterop/0002-cmake-Fix-install-folder.patch
   - path: patches
     folder: add_patches
 
