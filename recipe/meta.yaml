@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-    sha256: 6a5dc0dbf2cfb01c712176d9e5d59e1473287a2587ce4c7d1ee43e5c49e6e78a
+    sha256: b3cf25f500624fe12ffc40f858a04c46daea808298e64d924b594eb35ca1c806
     folder: cppinterop
     patches:
       - patches/cppinterop/0003-Implement-detection-of-resource-and-include-dirs.patch
