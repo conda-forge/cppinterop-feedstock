@@ -18,6 +18,7 @@ source:
       - patches/cppinterop/0003-Implement-detection-of-resource-and-include-dirs.patch
       - patches/cppinterop/0004-cmake-config-fix-library-suffix-and-prefix.patch
       - patches/cppinterop/0005-Fix-config-for-msvc.patch
+      - patches/cppinterop/0006-Add-DllExports.patch
   - path: patches
     folder: add_patches
 
