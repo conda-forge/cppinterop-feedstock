@@ -31,6 +31,10 @@ void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
     ClangArgs.push_back(resource_dir);
   }
   std::vector<std::string> CxxSystemIncludes;
+  // Oddly, conda supports "pseudo cross-compilation" and gives us the compiler
+  // include paths relative to the compiler binary. Now we need to find out
+  // where that binary is...
+  const char* Prefix = CONDA_PREFIX;
   Cpp::DetectSystemCompilerIncludePaths(CxxSystemIncludes, CxxCompiler);
   for (std::string CxxInclude : CxxSystemIncludes) {
     if (!file_exists(CxxInclude)) {
