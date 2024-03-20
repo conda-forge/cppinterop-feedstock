@@ -25,6 +25,12 @@ source:
 build:
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
+  error_overlinking: false # FIXME: We should adjust the ignore_run_exports.
+  ignore_run_exports:
+    - zstd  # [win]
+    - libxml2
+    - backtrace
+    - libllvm{{ clangdev }}
 
 requirements:
   build:
@@ -46,7 +52,7 @@ requirements:
     - backtrace  # [unix and x86]
     - libxml2
     - zlib
-    - zstd  # [not win]
+    - zstd  # [unix]
     - libcxx {{ cxx_compiler_version }}  # [osx]
     - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   run_constrained:
@@ -73,17 +79,18 @@ test:
     # Avoid Bad CPU from cmake when cross-compiling on osx and arm...
     - exit 0  # [build_platform != target_platform]
     - mkdir -p cmake_build_test && pushd cmake_build_test
+    - {{ target_platform }}-c++ -xc++ -E -v /dev/null  # [unix]
     - cmake -DCMAKE_BUILD_TYPE=Debug -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config Debug -- -v
-    - ./cmake_build_test || true #FIXME
+    - ./cmake_build_test g++  # [unix]
     - rm -fr *
     - cmake -DCMAKE_BUILD_TYPE=Release -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config Release
-    - ./cmake_build_test || true #FIXME
+    - ./cmake_build_test g++  # [unix]
     - rm -fr *
     - cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config RelWithDebInfo
-    - ./cmake_build_test || true #FIXME
+    - ./cmake_build_test g++  # [unix]
     - popd
 
 about:

@@ -213,7 +213,7 @@ index 96345ffb..004cf5bf 100644
    /// can be used to iterate through the index value to get each specific
    /// base class.
 -  TCppScope_t GetBaseClass(TCppType_t klass, TCppIndex_t ibase);
-+  DllExport DllExport TCppScope_t GetBaseClass(TCppType_t klass, TCppIndex_t ibase);
++  DllExport TCppScope_t GetBaseClass(TCppType_t klass, TCppIndex_t ibase);
  
    /// Checks if the supplied Derived Class is a sub-class of the
    /// provided Base Class.
