@@ -3,6 +3,21 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <sys/stat.h>
+
+inline bool file_exists(const std::string& name) {
+  struct stat buffer;
+  return (stat (name.c_str(), &buffer) == 0);
+}
+
+inline std::string append_path(const std::string &to, const std::string& what) {
+#if defined(WIN32)
+#  define DIR_SEPARATOR '\\'
+#else
+#  define DIR_SEPARATOR '/'
+#endif
+  return to + DIR_SEPARATOR + what;
+}
 
 using Args = std::vector<std::string>;
 
@@ -17,7 +32,17 @@ void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
   }
   std::vector<std::string> CxxSystemIncludes;
   Cpp::DetectSystemCompilerIncludePaths(CxxSystemIncludes, CxxCompiler);
-  for (const std::string &CxxInclude : CxxSystemIncludes) {
+  for (std::string CxxInclude : CxxSystemIncludes) {
+    if (!file_exists(CxxInclude)) {
+      // Try make these paths absolute.
+      std::string FullPath = append_path(Prefix, CxxInclude);
+      if (!file_exists(FullPath)) {
+        std::cerr << "'" << CxxInclude << "'" << " not found, neither is '"
+                  << FullPath << "'\n";
+        continue;
+      }
+      CxxInclude = FullPath;
+    }
     ClangArgs.push_back("-isystem");
     ClangArgs.push_back(CxxInclude);
   }
