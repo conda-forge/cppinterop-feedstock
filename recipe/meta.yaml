@@ -79,18 +79,18 @@ test:
     # Avoid Bad CPU from cmake when cross-compiling on osx and arm...
     - exit 0  # [build_platform != target_platform]
     - mkdir -p cmake_build_test && pushd cmake_build_test
-    - $GXX -xc++ -E -v /dev/null  # [unix]
+    - $CXX -xc++ -E -v /dev/null  # [unix]
     - cmake -DCMAKE_BUILD_TYPE=Debug -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config Debug -- -v
-    - ./cmake_build_test $GXX  # [unix]
+    - ./cmake_build_test $CXX  # [unix]
     - rm -fr *
     - cmake -DCMAKE_BUILD_TYPE=Release -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config Release
-    - ./cmake_build_test $GXX  # [unix]
+    - ./cmake_build_test $CXX  # [unix]
     - rm -fr *
     - cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
     - cmake --build . --config RelWithDebInfo
-    - ./cmake_build_test $GXX  # [unix]
+    - ./cmake_build_test $CXX  # [unix]
     - popd
 
 about:
