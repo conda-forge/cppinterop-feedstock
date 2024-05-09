@@ -1,6 +1,8 @@
 clangdev:
-  - 17.*
+  - 18.*
 
+c_stdlib_version:      # [linux]
+  - 2.17               # [linux]
 c_compiler:            # [osx]
   - clang_bootstrap    # [osx]
 cxx_compiler:          # [osx]
