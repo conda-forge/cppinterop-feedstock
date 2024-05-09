@@ -3,7 +3,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 clangdev:
-- 17.*
+- 18.*
 cxx_compiler:
 - vs2019
 libxml2:

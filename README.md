@@ -11,9 +11,9 @@ Summary: The CppInterOp library provides a minimalist approach for other languag
 to interoperate with C++ entities.
 
 
-Development: https://cppinterop.readthedocs.io/en/1.2.0/DevelopersDocumentation.html
+Development: https://cppinterop.readthedocs.io/en/1.3.0/DevelopersDocumentation.html
 
-Documentation: https://cppinterop.readthedocs.io/en/1.2.0
+Documentation: https://cppinterop.readthedocs.io/en/1.3.0
 
 CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
 The API support downstream tools that utilize interactive C++ by using
