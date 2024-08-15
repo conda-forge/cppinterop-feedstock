@@ -19,9 +19,7 @@ source:
 build:
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
-  error_overlinking: false # FIXME: We should adjust the ignore_run_exports.
   ignore_run_exports:
-    - zstd  # [win]
     - libxml2
     - backtrace
     - libllvm{{ clangdev }}
@@ -47,7 +45,10 @@ requirements:
     - backtrace  # [unix and x86]
     - libxml2
     - zlib
-    - zstd  # [unix]
+    - zstd
+  run:
+    # clang_bootstrap has no run-export
+    - libcxx >={{ cxx_compiler_version }}  # [osx]
   run_constrained:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
