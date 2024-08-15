@@ -40,8 +40,6 @@ requirements:
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
     - git-lfs
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   host:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
@@ -50,21 +48,14 @@ requirements:
     - libxml2
     - zlib
     - zstd  # [unix]
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   run_constrained:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
-  run:
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng >={{ cxx_compiler_version }}  # [linux]
 
 test:
   requires:
       - {{ compiler('cxx') }}
-      - libcxx {{ cxx_compiler_version }}  # [osx]
-      - libstdcxx-ng >={{ cxx_compiler_version }}  # [linux]
       - cmake
       - ninja
   files:
