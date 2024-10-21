@@ -6,7 +6,7 @@ set -x
 
 export clangdev_tag=${clangdev/\.\*/}
 clangdev1=${clangdev_tag}.0.0
-export clangdev_ver=${clangdev1/17\.0\.0/17.0.6}  # fix: clang 17.0.0 is removed from releases
+export clangdev_ver=${clangdev1/19\.1\.0/19.1.2}
 
 ### Build CppInterOp next to llvm-project.
 
