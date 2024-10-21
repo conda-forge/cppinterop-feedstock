@@ -13,7 +13,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 clangdev:
-- '18'
+- '19'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
