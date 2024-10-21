@@ -12,9 +12,6 @@ source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
     sha256: 566e3818de97656990d302a916a2d6925db33c7765a762f36ba28dead03c34a8
     folder: cppinterop
-    patches:
-  - path: patches
-    folder: add_patches
 
 build:
   number: {{ build_number }}
