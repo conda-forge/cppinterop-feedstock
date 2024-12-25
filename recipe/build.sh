@@ -16,8 +16,6 @@ mkdir -p build && cd build
 
 cmake \
   ${CMAKE_ARGS}                   \
-  -DUSE_CLING=OFF                 \
-  -DUSE_REPL=ON                   \
   -DBUILD_SHARED_LIBS=ON          \
   -DCPPINTEROP_ENABLE_TESTING=ON  \
   ..
