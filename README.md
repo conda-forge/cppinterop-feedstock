@@ -11,9 +11,9 @@ Summary: The CppInterOp library provides a minimalist approach for other languag
 to interoperate with C++ entities.
 
 
-Development: https://cppinterop.readthedocs.io/en/1.5.0/DevelopersDocumentation.html
+Development: https://cppinterop.readthedocs.io/en/1.6.0/DevelopersDocumentation.html
 
-Documentation: https://cppinterop.readthedocs.io/en/1.5.0
+Documentation: https://cppinterop.readthedocs.io/en/1.6.0
 
 CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
 The API support downstream tools that utilize interactive C++ by using
@@ -145,34 +145,6 @@ mamba repoquery whoneeds cppinterop --channel conda-forge
 mamba repoquery depends cppinterop --channel conda-forge
 ```
 
-Troubleshooting
-================
-
-1. Apply this patch so you can more easily run commands inside the container (adding `--privileged` to the `docker run` args can also be useful if you want to get at proper debugging tools):
-
-```
-diff
-diff --git a/.scripts/run_docker_build.sh b/.scripts/run_docker_build.sh
-index 00f377a..245af4b 100755
---- a/.scripts/run_docker_build.sh
-+++ b/.scripts/run_docker_build.sh
-@@ -105,10 +105,10 @@ docker run ${DOCKER_RUN_ARGS} \
-            -e STAGING_BINSTAR_TOKEN \
-            "${DOCKER_IMAGE}" \
-            bash \
--           "/home/conda/feedstock_root/${PROVIDER_DIR}/build_steps.sh"
-+           # "/home/conda/feedstock_root/${PROVIDER_DIR}/build_steps.sh"
-
- # verify that the end of the script was reached
- test -f "$DONE_CANARY"
-```
-
-2. Run `./build-locally.py`
-3. Run `/home/conda/feedstock_root/.scripts/build_steps.sh` inside the container
-4. when it fails look for a path like `/home/conda/feedstock_root/build_artifacts/clad_1711986423265/` in the log
-5. `cd $ABOVE/test_tmp/`
-6. `source conda_test_env_vars.sh`
-7. `bash run_test.sh`
 
 About conda-forge
 =================
