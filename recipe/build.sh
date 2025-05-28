@@ -7,7 +7,6 @@ set -x
 export clangdev_tag=${clangdev/\.\*/}
 clangdev1=${clangdev_tag}.1.0
 export clangdev_ver=${clangdev1/20\.1\.0/20.1.5}
-echo "Using clangdev version: ${clangdev_ver}"
 
 ### Build CppInterOp next to llvm-project.
 
