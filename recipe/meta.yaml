@@ -1,5 +1,5 @@
 {% set name = "cppinterop" %}
-{% set build_number = 2 %}
+{% set build_number = 3 %}
 {% set version = "1.7.0" %}
 {% set revision_tag = "v"+version %}
 
