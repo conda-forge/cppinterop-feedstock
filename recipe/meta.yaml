@@ -1,5 +1,5 @@
 {% set name = "cppinterop" %}
-{% set build_number = 4 %}
+{% set build_number = 5 %}
 {% set version = "1.7.0" %}
 {% set revision_tag = "v"+version %}
 
@@ -17,7 +17,7 @@ build:
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
   ignore_run_exports:
-    - libxml2
+    - libxml2-devel
     - backtrace
     - libllvm{{ clangdev }}
   run_exports:
@@ -40,7 +40,7 @@ requirements:
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
     - backtrace  # [unix and x86]
-    - libxml2
+    - libxml2-devel
     - zlib
     - zstd
   run:
