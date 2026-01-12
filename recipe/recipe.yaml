@@ -1,0 +1,119 @@
+schema_version: 1
+
+context:
+  name: cppinterop
+  build_number: 6
+  version: 1.7.0
+  revision_tag: v${{ version }}
+  clang_major: ${{ (clangdev | default("None") | split("."))[0] }}
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/${{ revision_tag }}.tar.gz
+    sha256: 7208cee5da55043b9d121a7f0236ef09daada4a1c517b3bed611530eee325622
+    target_directory: cppinterop
+
+build:
+  number: ${{ build_number }}
+  string: clang${{ clang_major }}_repl_h${{ hash }}_${{ build_number }}
+
+requirements:
+  build:
+    - cmake
+    - if: unix
+      then: make
+      else: ninja
+    - ${{ stdlib('c') }}
+    - ${{ compiler('cxx') }}
+    - llvm ${{ clangdev }}
+    - llvmdev ${{ clangdev }}
+    - clangdev ${{ clangdev }}
+    - git-lfs
+  host:
+    - llvm ${{ clangdev }}
+    - llvmdev ${{ clangdev }}
+    - clangdev ${{ clangdev }}
+    - if: unix and x86
+      then: backtrace
+    - libxml2-devel
+    - zlib
+    - zstd
+  run:
+    # clang_bootstrap has no run-export
+    - if: osx
+      then: libcxx >=${{ cxx_compiler_version }}
+  run_exports:
+    - ${{ pin_subpackage(name, upper_bound='x.x') }}
+  ignore_run_exports:
+    by_name:
+      - libxml2-devel
+      - backtrace
+      - libllvm${{ clang_major }}
+  run_constraints:
+    - llvm ${{ clangdev }}
+    - llvmdev ${{ clangdev }}
+    - clangdev ${{ clangdev }}
+
+tests:
+  - files:
+      recipe:
+        - CMakeLists.txt
+        - test.cpp
+    requirements:
+      run:
+        - ${{ compiler('cxx') }}
+        - cmake
+        - ninja
+    script:
+      - if: unix
+        then: test -f $PREFIX/lib/libclangCppInterOp${SHLIB_EXT}
+      - if: win
+        then: if not exist %LIBRARY_BIN%\\clangCppInterOp.dll exit 1
+      - if: build_platform != target_platform
+        then: exit 0
+      - mkdir -p cmake_build_test && pushd cmake_build_test
+      - if: unix
+        then: $CXX -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*/p' -e '}'
+      - cmake -DCMAKE_BUILD_TYPE=Debug -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
+      - cmake --build . --config Debug -- -v
+      - if: unix
+        then: ./cmake_build_test $CXX
+      - rm -fr *
+      - cmake -DCMAKE_BUILD_TYPE=Release -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
+      - cmake --build . --config Release
+      - if: unix
+        then: ./cmake_build_test $CXX
+      - rm -fr *
+      - cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCONDA_PREFIX="$BUILD_PREFIX" -G "Ninja" ..
+      - cmake --build . --config RelWithDebInfo
+      - if: unix
+        then: ./cmake_build_test $CXX
+      - popd
+
+about:
+  license: Apache-2.0 WITH LLVM-exception
+  license_file: cppinterop/LICENSE.txt
+  summary: |
+    The CppInterOp library provides a minimalist approach for other languages
+    to interoperate with C++ entities.
+  description: |
+    CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
+    The API support downstream tools that utilize interactive C++ by using
+    the compiler as a service. That is, embed Clang and LLVM as a libraries
+    in their codebases. The API are designed to be minimalistic and aid
+    non-trivial tasks such as language interoperability on the fly. In such
+    scenarios CppInterOp can be used to provide the necessary introspection
+    information to the other side helping the language cross talk.
+  homepage: https://github.com/compiler-research/CppInterOp
+  repository: https://cppinterop.readthedocs.io/en/${{ version }}/DevelopersDocumentation.html
+  documentation: https://cppinterop.readthedocs.io/en/${{ version }}
+
+extra:
+  recipe-maintainers:
+    - JohanMabille
+    - alexander-penev
+    - vgvassilev
+
