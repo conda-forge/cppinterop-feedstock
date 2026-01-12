@@ -10,7 +10,6 @@ Package license: Apache-2.0 WITH LLVM-exception
 Summary: The CppInterOp library provides a minimalist approach for other languages
 to interoperate with C++ entities.
 
-
 Development: https://cppinterop.readthedocs.io/en/1.7.0/DevelopersDocumentation.html
 
 Documentation: https://cppinterop.readthedocs.io/en/1.7.0
@@ -22,7 +21,6 @@ in their codebases. The API are designed to be minimalistic and aid
 non-trivial tasks such as language interoperability on the fly. In such
 scenarios CppInterOp can be used to provide the necessary introspection
 information to the other side helping the language cross talk.
-
 
 Current build status
 ====================
@@ -167,12 +165,12 @@ it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
-To manage the continuous integration and simplify feedstock maintenance
+To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
-For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
+For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -199,7 +197,7 @@ merged, the recipe will be re-built and uploaded automatically to the
 everybody to install and use from the `conda-forge` channel.
 Note that all branches in the conda-forge/cppinterop-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
-on branches in forks and branches in the main repository should only be used to
+on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
