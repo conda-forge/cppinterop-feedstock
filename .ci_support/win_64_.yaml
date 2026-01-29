@@ -5,7 +5,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 clangdev:
-- 20.*
+- 21.*
 cxx_compiler:
 - vs2022
 libxml2_devel:
