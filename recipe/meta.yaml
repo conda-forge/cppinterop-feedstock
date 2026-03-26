@@ -1,6 +1,6 @@
 {% set name = "cppinterop" %}
-{% set build_number = 1 %}
-{% set version = "1.8.0" %}
+{% set build_number = 0 %}
+{% set version = "1.9.0" %}
 {% set revision_tag = "v"+version %}
 
 
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-    sha256: b46c22f23274a9be4868b2d40c4866428816bd591b39449cf65e518744d82495
+    sha256: 23c25ff2182ea7352b6309b235af0d1f95546a29f831b622b6a9c74d12fc3752
     folder: cppinterop
 
 build:
