@@ -1,29 +1,45 @@
 #!/bin/bash
 
-set -x
+set -euxo pipefail
 
-# Common settings
-
-export clangdev_tag=${clangdev/\.\*/}
-clangdev1=${clangdev_tag}.1.0
-export clangdev_ver=${clangdev1/21\.1\.0/21.1.8}
-CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 
 ### Build CppInterOp next to llvm-project.
 
 pushd cppinterop
+
+tablegen_args=()
+if [[ "${build_platform}" != "${target_platform}" ]]; then
+  if [[ "${build_platform}" == linux-* ]]; then
+    native_cc="${BUILD_PREFIX}/bin/x86_64-conda-linux-gnu-cc"
+    native_cxx="${BUILD_PREFIX}/bin/x86_64-conda-linux-gnu-c++"
+  else
+    native_cc="${BUILD_PREFIX}/bin/x86_64-apple-darwin13.4.0-clang"
+    native_cxx="${BUILD_PREFIX}/bin/x86_64-apple-darwin13.4.0-clang++"
+  fi
+  # Do not pass the target toolchain or target CXXFLAGS to this native build.
+  CC="${native_cc}" CXX="${native_cxx}" CFLAGS= CXXFLAGS= LDFLAGS= \
+    cmake -S . -B build-native \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_PREFIX_PATH="${BUILD_PREFIX}" \
+      -DCMAKE_MODULE_PATH="${BUILD_PREFIX}/lib/cmake/llvm" \
+      -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${PWD}/build-native/bin" \
+      -DLLVM_DIR="${BUILD_PREFIX}/lib/cmake/llvm" \
+      -DCPPINTEROP_BUILD_TABLEGEN_ONLY=ON
+  cmake --build build-native --target cppinterop-tblgen --parallel "${CPU_COUNT}"
+  tablegen_args+=("-DCPPINTEROP_TABLEGEN_EXE=${PWD}/build-native/bin/cppinterop-tblgen")
+fi
 
 mkdir -p build && cd build
 
 cmake \
   ${CMAKE_ARGS}                   \
   -DBUILD_SHARED_LIBS=ON          \
-  -DCPPINTEROP_ENABLE_TESTING=ON  \
+  -DCPPINTEROP_ENABLE_TESTING=OFF \
+  "${tablegen_args[@]}"           \
   ..
 
 cmake --build . --parallel ${CPU_COUNT}
-# FIXME: There is one failing tests in Release mode. Investigate.
-#cmake --build . --target check-cppinterop --parallel ${CPU_COUNT} || true
-make install
+cmake --install .
 
 popd

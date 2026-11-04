@@ -1,4 +1,4 @@
-#include "clang/Interpreter/CppInterOp.h"
+#include "CppInterOp/CppInterOp.h"
 
 #include <algorithm>
 #include <iostream>
@@ -21,7 +21,7 @@ inline std::string append_path(const std::string &to, const std::string& what) {
 
 using Args = std::vector<std::string>;
 
-void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
+Cpp::InterpRef createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
   Args ClangArgs;
   if (std::find(ExtraArgs.begin(), ExtraArgs.end(), "-resource-dir") != ExtraArgs.end()) {
     std::string resource_dir = Cpp::DetectResourceDir();
@@ -62,10 +62,13 @@ void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2)
+  if (argc < 2) {
     std::cerr << "Not enough arguments. Pass a compiler name.\n";
+    return 1;
+  }
 
-  createInterpreter(argv[1], {"-v"});
+  if (createInterpreter(argv[1], {"-v"}) == nullptr)
+    return 1;
 
   return Cpp::Process("#include <string>");
 }

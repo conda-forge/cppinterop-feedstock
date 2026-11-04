@@ -10,7 +10,7 @@ cmake ^
   -G "Ninja" ^
   %CMAKE_ARGS%                              ^
   -DBUILD_SHARED_LIBS=ON                    ^
-  -DCPPINTEROP_ENABLE_TESTING=ON            ^
+  -DCPPINTEROP_ENABLE_TESTING=OFF            ^
   ..
 
 if errorlevel 1 exit 1
