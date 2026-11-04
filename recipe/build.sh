@@ -4,11 +4,16 @@ set -euxo pipefail
 
 export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 
+if [[ "${target_platform}" == linux-ppc64le ]]; then
+  # Inline PLT calls to glibc's nonshared helpers overflow R_PPC64_REL24.
+  export CXXFLAGS="${CXXFLAGS} -fplt"
+fi
+
 ### Build CppInterOp next to llvm-project.
 
 pushd cppinterop
 
-tablegen_args=()
+cppinterop_args=(-DBUILD_SHARED_LIBS=ON -DCPPINTEROP_ENABLE_TESTING=OFF)
 if [[ "${build_platform}" != "${target_platform}" ]]; then
   if [[ "${build_platform}" == linux-* ]]; then
     native_cc="${BUILD_PREFIX}/bin/x86_64-conda-linux-gnu-cc"
@@ -29,16 +34,14 @@ if [[ "${build_platform}" != "${target_platform}" ]]; then
       -DLLVM_DIR="${BUILD_PREFIX}/lib/cmake/llvm" \
       -DCPPINTEROP_BUILD_TABLEGEN_ONLY=ON
   cmake --build build-native --target cppinterop-tblgen --parallel "${CPU_COUNT}"
-  tablegen_args+=("-DCPPINTEROP_TABLEGEN_EXE=${PWD}/build-native/bin/cppinterop-tblgen")
+  cppinterop_args+=("-DCPPINTEROP_TABLEGEN_EXE=${PWD}/build-native/bin/cppinterop-tblgen")
 fi
 
 mkdir -p build && cd build
 
 cmake \
   ${CMAKE_ARGS}                   \
-  -DBUILD_SHARED_LIBS=ON          \
-  -DCPPINTEROP_ENABLE_TESTING=OFF \
-  "${tablegen_args[@]}"           \
+  "${cppinterop_args[@]}"         \
   ..
 
 cmake --build . --parallel ${CPU_COUNT}
