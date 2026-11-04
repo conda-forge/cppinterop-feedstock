@@ -17,11 +17,13 @@ if [[ "${build_platform}" != "${target_platform}" ]]; then
     native_cc="${BUILD_PREFIX}/bin/x86_64-apple-darwin13.4.0-clang"
     native_cxx="${BUILD_PREFIX}/bin/x86_64-apple-darwin13.4.0-clang++"
   fi
-  # Do not pass the target toolchain or target CXXFLAGS to this native build.
+  # Keep the native tool and its LLVM dependencies out of the target prefix.
   CC="${native_cc}" CXX="${native_cxx}" CFLAGS= CXXFLAGS= LDFLAGS= \
+    CMAKE_PREFIX_PATH="${BUILD_PREFIX}" \
     cmake -S . -B build-native \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_PREFIX_PATH="${BUILD_PREFIX}" \
+      -DCMAKE_IGNORE_PREFIX_PATH="${PREFIX}" \
       -DCMAKE_MODULE_PATH="${BUILD_PREFIX}/lib/cmake/llvm" \
       -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${PWD}/build-native/bin" \
       -DLLVM_DIR="${BUILD_PREFIX}/lib/cmake/llvm" \

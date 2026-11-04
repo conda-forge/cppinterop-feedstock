@@ -31,10 +31,17 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
     # Build cppinterop-tblgen for the build machine when cross-compiling.
+    # Use the implementation package to avoid activating native CPU flags.
     - if: linux and build_platform != target_platform
-      then: gxx_linux-64 ${{ cxx_compiler_version }}.*
+      then: gxx_impl_linux-64 ${{ cxx_compiler_version }}.*
     - if: osx and build_platform != target_platform
       then: clangxx_osx-64 ${{ cxx_compiler_version }}.*
+    # Native LLVM's CMake configuration needs build-platform development files.
+    - if: unix and build_platform != target_platform
+      then:
+        - libxml2-devel
+        - zlib
+        - zstd
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
