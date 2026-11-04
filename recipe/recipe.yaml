@@ -34,8 +34,8 @@ requirements:
     # Use the implementation package to avoid activating native CPU flags.
     - if: linux and build_platform != target_platform
       then: gxx_impl_linux-64 ${{ cxx_compiler_version }}.*
-    - if: osx and build_platform != target_platform
-      then: clangxx_osx-64 ${{ cxx_compiler_version }}.*
+    # On macOS, build-platform clangdev already supplies the native compiler.
+    # Pinning clangxx_osx-64 to the bootstrap version conflicts with LLVM 22/23.
     # Native LLVM's CMake configuration needs build-platform development files.
     - if: unix and build_platform != target_platform
       then:
