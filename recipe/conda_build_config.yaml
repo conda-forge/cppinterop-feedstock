@@ -1,7 +1,5 @@
 clangdev:
   - 21.*
-  - 22.*
-  - 23.*
 
 c_compiler:            # [osx]
   - clang_bootstrap    # [osx]

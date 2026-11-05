@@ -10,9 +10,9 @@ Package license: Apache-2.0 WITH LLVM-exception
 Summary: The CppInterOp library provides a minimalist approach for other languages
 to interoperate with C++ entities.
 
-Development: https://github.com/compiler-research/CppInterOp
+Development: https://cppinterop.readthedocs.io/en/1.9.0/DevelopersDocumentation.html
 
-Documentation: https://cppinterop.readthedocs.io/en/latest/
+Documentation: https://cppinterop.readthedocs.io/en/1.9.0
 
 CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
 The API support downstream tools that utilize interactive C++ by using
@@ -47,24 +47,10 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>osx_64_clangdev21.</td>
+              <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21254&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_clangdev21._" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_clangdev22.</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21254&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_clangdev22._" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_clangdev23.</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=21254&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_clangdev23._" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/cppinterop-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr>

@@ -13,10 +13,6 @@ source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/v${{ version }}.tar.gz
     sha256: 23c25ff2182ea7352b6309b235af0d1f95546a29f831b622b6a9c74d12fc3752
     target_directory: cppinterop
-    patches:
-      - llvm-22-23.patch
-      - packaged-googletest.patch
-      - long-command-output.patch
 
 build:
   number: ${{ build_number }}
@@ -30,15 +26,12 @@ requirements:
     - if: win
       then: ninja
     - ${{ stdlib('c') }}
-    - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
     - git-lfs
   host:
-    - gtest
-    - gmock
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
@@ -58,8 +51,6 @@ requirements:
       - libxml2-devel
       - backtrace
       - libllvm${{ clangdev | default('None') | split('.') | first }}
-      - gtest
-      - gmock
   run_constraints:
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
@@ -124,8 +115,8 @@ about:
     scenarios CppInterOp can be used to provide the necessary introspection
     information to the other side helping the language cross talk.
   homepage: https://github.com/compiler-research/CppInterOp
-  repository: https://github.com/compiler-research/CppInterOp
-  documentation: https://cppinterop.readthedocs.io/en/latest/
+  repository: https://cppinterop.readthedocs.io/en/${{ version }}/DevelopersDocumentation.html
+  documentation: https://cppinterop.readthedocs.io/en/${{ version }}
 
 extra:
   recipe-maintainers:
