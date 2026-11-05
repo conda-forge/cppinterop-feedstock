@@ -427,3 +427,27 @@ index 37ee36c2..741095cf 100644
  #include <list>
  #include <string>
  #include <unordered_set>
+diff --git a/unittests/CppInterOp/ScopeReflectionTest.cpp b/unittests/CppInterOp/ScopeReflectionTest.cpp
+--- a/unittests/CppInterOp/ScopeReflectionTest.cpp
++++ b/unittests/CppInterOp/ScopeReflectionTest.cpp
+@@ -236,7 +236,7 @@
+   auto lookup = S.getStdNamespace()->lookup(&C.Idents.get("complex"));
+   auto *CTD = cast<ClassTemplateDecl>(lookup.front());
+   for (ClassTemplateSpecializationDecl *CTSD : CTD->specializations())
+-    EXPECT_TRUE(Cpp::IsBuiltin(C.getTypeDeclType(CTSD).getAsOpaquePtr()));
++    EXPECT_TRUE(Cpp::IsBuiltin(C.Get_Tag_Type(CTSD).getAsOpaquePtr()));
+ 
+   // User-defined records (even with "complex" in the name) are not builtins.
+   Interp->declare("class complex_number {}; class regular_record {};");
+@@ -398,7 +398,11 @@
+   EXPECT_EQ(Cpp::GetCompleteName(Cpp::GetScopeFromType(
+                                              Cpp::GetVariableType(
+                                                      Decls[9]))), "A<int>");
++#if CLANG_VERSION_MAJOR < 22
+   EXPECT_EQ(Cpp::GetCompleteName(Decls[10]), "(unnamed)");
++#else
++  EXPECT_EQ(Cpp::GetCompleteName(Decls[10]), "(unnamed enum)");
++#endif
+   EXPECT_EQ(Cpp::GetCompleteName(Decls[11]), "fn");
+   EXPECT_EQ(Cpp::GetCompleteName(nullptr), "<unnamed>");
+ 
