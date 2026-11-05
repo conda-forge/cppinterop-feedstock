@@ -58,10 +58,6 @@ requirements:
 
 tests:
   - package_contents:
-      include:
-        - CppInterOp/CppInterOp.h
-        - CppInterOp/Dispatch.h
-        - clang-c/CXCppInterOp.h
       files:
         - if: win
           then: Library/bin/clangCppInterOp.dll
@@ -76,10 +72,7 @@ tests:
     requirements:
       run:
         - ${{ compiler('cxx') }}
-<<<<<<< HEAD
         - clang ${{ clangdev }}
-=======
->>>>>>> 6dbfdb73e26eb99b63747df364d49b61d7b17d63
         - cmake
         - ninja
     script:
