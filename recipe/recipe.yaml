@@ -76,6 +76,7 @@ tests:
     requirements:
       run:
         - ${{ compiler('cxx') }}
+        - clang ${{ clangdev }}
         - cmake
         - ninja
     script:
