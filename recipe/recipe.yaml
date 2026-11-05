@@ -2,19 +2,19 @@ schema_version: 1
 
 context:
   name: cppinterop
-  build_number: 0
-  version: 2.0.0.dev20261104
-  revision_tag: 3a6e86f13612d850d334f3b5d7094c5f8a75b02a
+  build_number: 1
+  version: 1.9.0
 
 package:
   name: cppinterop
   version: ${{ version }}
 
 source:
-  # LLVM 22/23 support is unreleased; pin the development snapshot immutably.
-  - url: https://github.com/compiler-research/CppInterOp/archive/${{ revision_tag }}.tar.gz
-    sha256: 76edd055efd0b160971ba6d671841ef849be7f9a570a490587f1d8fe92e0b239
+  - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/v${{ version }}.tar.gz
+    sha256: 23c25ff2182ea7352b6309b235af0d1f95546a29f831b622b6a9c74d12fc3752
     target_directory: cppinterop
+    patches:
+      - llvm-22-23.patch
 
 build:
   number: ${{ build_number }}
@@ -30,18 +30,6 @@ requirements:
     - ${{ stdlib('c') }}
     - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
-    # Build cppinterop-tblgen for the build machine when cross-compiling.
-    # Use the implementation package to avoid activating native CPU flags.
-    - if: linux and build_platform != target_platform
-      then: gxx_impl_linux-64 ${{ cxx_compiler_version }}.*
-    # On macOS, build-platform clangdev already supplies the native compiler.
-    # Pinning clangxx_osx-64 to the bootstrap version conflicts with LLVM 22/23.
-    # Native LLVM's CMake configuration needs build-platform development files.
-    - if: unix and build_platform != target_platform
-      then:
-        - libxml2-devel
-        - zlib
-        - zstd
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
@@ -75,8 +63,8 @@ tests:
   - package_contents:
       include:
         - CppInterOp/CppInterOp.h
-        - CppInterOp/CppInterOpAPI.inc
-        - CppInterOp/CppInterOpDecl.inc
+        - CppInterOp/Dispatch.h
+        - clang-c/CXCppInterOp.h
       files:
         - if: win
           then: Library/bin/clangCppInterOp.dll

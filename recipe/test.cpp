@@ -21,7 +21,7 @@ inline std::string append_path(const std::string &to, const std::string& what) {
 
 using Args = std::vector<std::string>;
 
-Cpp::InterpRef createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
+void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
   Args ClangArgs;
   if (std::find(ExtraArgs.begin(), ExtraArgs.end(), "-resource-dir") != ExtraArgs.end()) {
     std::string resource_dir = Cpp::DetectResourceDir();
@@ -70,5 +70,33 @@ int main(int argc, char *argv[]) {
   if (createInterpreter(argv[1], {"-v"}) == nullptr)
     return 1;
 
-  return Cpp::Process("#include <string>");
+  if (Cpp::Process("#include <string>"))
+    return 1;
+
+  // Exercise the AST and template interfaces changed by Clang 22/23.
+  if (Cpp::Declare("struct BackportRecord {}; "
+                   "template<class T> struct BackportBox { T value; }; "
+                   "template<class T> constexpr int backport_size = sizeof(T);"))
+    return 1;
+  auto record = Cpp::GetType("BackportRecord");
+  if (!record || Cpp::GetTypeAsString(record) != "BackportRecord" ||
+      Cpp::GetCompleteName(Cpp::GetScopeFromType(record)) != "BackportRecord")
+    return 1;
+
+  Cpp::TemplateArgInfo arg(Cpp::GetType("int"));
+  if (!Cpp::InstantiateTemplate(Cpp::GetNamed("BackportBox"), &arg, 1) ||
+      !Cpp::InstantiateTemplate(Cpp::GetNamed("backport_size"), &arg, 1))
+    return 1;
+
+  bool had_error = false;
+  if (Cpp::Evaluate("6 * 7", &had_error) != 42 || had_error)
+    return 1;
+
+  // Silencing diagnostics must preserve the error status and permit recovery.
+  if (!Cpp::Declare("invalid_syntax!!!;", true))
+    return 1;
+  if (Cpp::Declare("int backport_recovered = 42;"))
+    return 1;
+  return Cpp::Evaluate("backport_recovered", &had_error) == 42 && !had_error
+             ? 0 : 1;
 }
