@@ -13,10 +13,24 @@ CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 
 pushd cppinterop
 
+tblgen_args=()
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" ]]; then
+  CFLAGS= CXXFLAGS= LDFLAGS= cmake -S . -B build-native-tblgen \
+    -DCPPINTEROP_BUILD_TABLEGEN_ONLY=ON \
+    -DCMAKE_C_COMPILER="${CC_FOR_BUILD}" \
+    -DCMAKE_CXX_COMPILER="${CXX_FOR_BUILD}" \
+    -DCMAKE_PREFIX_PATH="${BUILD_PREFIX}" \
+    -DLLVM_DIR="${BUILD_PREFIX}/lib/cmake/llvm" \
+    -DCMAKE_BUILD_TYPE=Release
+  cmake --build build-native-tblgen --target cppinterop-tblgen --parallel "${CPU_COUNT}"
+  tblgen_args=(-DCPPINTEROP_TABLEGEN_EXE="${PWD}/build-native-tblgen/utils/TableGen/cppinterop-tblgen")
+fi
+
 mkdir -p build && cd build
 
 cmake \
   ${CMAKE_ARGS}                   \
+  "${tblgen_args[@]}"              \
   -DBUILD_SHARED_LIBS=ON          \
   -DCPPINTEROP_ENABLE_TESTING=ON  \
   ..

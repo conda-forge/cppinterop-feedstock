@@ -10,9 +10,9 @@ Package license: Apache-2.0 WITH LLVM-exception
 Summary: The CppInterOp library provides a minimalist approach for other languages
 to interoperate with C++ entities.
 
-Development: https://cppinterop.readthedocs.io/en/1.9.0/DevelopersDocumentation.html
+Development: https://cppinterop.readthedocs.io/en/2.0.0/DevelopersDocumentation.html
 
-Documentation: https://cppinterop.readthedocs.io/en/1.9.0
+Documentation: https://cppinterop.readthedocs.io/en/2.0.0
 
 CppInterOp exposes API from Clang and LLVM in a backward compatibe way.
 The API support downstream tools that utilize interactive C++ by using

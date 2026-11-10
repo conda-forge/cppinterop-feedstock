@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: cppinterop
-  build_number: 1
-  version: 1.9.0
+  build_number: 0
+  version: 2.0.0
 
 package:
   name: cppinterop
@@ -11,7 +11,12 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 23c25ff2182ea7352b6309b235af0d1f95546a29f831b622b6a9c74d12fc3752
+    sha256: 59c1118a02edd1b1a69b5ea2f223b849bc5f1cb51abec40930d33f432f7f1260
+    patches:
+      - patches/use-native-tablegen-target.patch
+      - patches/link-testdownstreamlib-with-dl.patch
+      - patches/ppc64le-indirect-glibc-calls.patch
+      - patches/forward-macos-target-to-benchmark.patch
     target_directory: cppinterop
 
 build:
@@ -30,6 +35,8 @@ requirements:
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
+    - libxml2-devel
+    - zlib
     - git-lfs
   host:
     - llvm ${{ clangdev }}
