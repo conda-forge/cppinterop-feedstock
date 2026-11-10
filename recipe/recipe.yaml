@@ -14,6 +14,7 @@ source:
     sha256: 59c1118a02edd1b1a69b5ea2f223b849bc5f1cb51abec40930d33f432f7f1260
     patches:
       - patches/use-native-tablegen-target.patch
+      - patches/link-testdownstreamlib-with-dl.patch
     target_directory: cppinterop
 
 build:
