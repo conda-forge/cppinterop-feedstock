@@ -35,6 +35,8 @@ requirements:
     - llvm ${{ clangdev }}
     - llvmdev ${{ clangdev }}
     - clangdev ${{ clangdev }}
+    - libxml2-devel
+    - zlib
     - git-lfs
   host:
     - llvm ${{ clangdev }}
