@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
 project(cmake_build_test)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 find_package(CppInterOp REQUIRED)
 message(STATUS "CppInterOp library status:")

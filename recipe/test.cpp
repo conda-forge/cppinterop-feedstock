@@ -21,7 +21,7 @@ inline std::string append_path(const std::string &to, const std::string& what) {
 
 using Args = std::vector<std::string>;
 
-void* createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
+Cpp::InterpRef createInterpreter(const char* CxxCompiler, const Args &ExtraArgs = {}) {
   Args ClangArgs;
   if (std::find(ExtraArgs.begin(), ExtraArgs.end(), "-resource-dir") != ExtraArgs.end()) {
     std::string resource_dir = Cpp::DetectResourceDir();
